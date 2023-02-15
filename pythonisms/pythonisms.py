@@ -9,12 +9,23 @@ print(next(count))
 print(next(count))
 
 
+def count_down(n):
+    while n > 0:
+        yield n
+        n - 5
+
 class Car:
     def __init__(self, name):
         self.name = name
 
     def __str__(self):
         return self.name
+
+    def __len__(self):
+        return "The Length of One Car"
+
+    def __repr__(self):
+        return "This is a class of objects called cars. Different types of cars."
 
     def __add__(self, other):
         return Car(self.name + other.name)
@@ -27,6 +38,9 @@ class Node:
     def __init__(self, value, next=None):
         self.value = value
         self.next = next
+
+    def __str__(self):
+        return "This is a node. It has a value and it has a next attribute"
 
 
 class Queue:
@@ -68,7 +82,18 @@ class Queue:
 
 
     def __iter__(self):
-        yield from self.items
+        def value_generator():
+            current = self.head
+
+            while current:
+                yield current.value
+                current = current.next
+
+        return value_generator()
+
+
+    def __eq__(self, other):
+        return list(self) == list(other)
 
 
 
